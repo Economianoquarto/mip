@@ -1,11 +1,31 @@
 ---
-title: "mip_temp"
+title: "Matriz de Insumo Produto para o Piauí"
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+Seguindo o trabalho de Vale e Perobelli (2020)
 
 ```{r}
-1 + 1
+library(Rcpp)
+library(readxl)
+```
+
+
+```{r}
+R <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls",sheet="01", range = "A1:BV132")
+
+
+U <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="02",   range = "A1:BZ134")
+Odn <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="03",   range = "A1:CA134")
+Odi <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="04",   range = "A1:CA134")
+In <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="05",   range = "A1:CA134")
+Ii <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="06",   range = "A1:CA134")
+Cn <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="07",   range = "A1:CA134")
+Ci <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="08",   range = "A1:CA134")
+Tn <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="09",   range = "A1:CA134")
+Ti <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="10",   range = "A1:CA134")
+In <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="11",   range = "A1:BQ132")
+Ii <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="12",   range = "A1:BQ132")
+Pn <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="13",   range = "A1:DY72")
+CT <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="14",   range = "A1:BQ72")
+Im <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="15",   range = "A1:BQ72")
 ```
