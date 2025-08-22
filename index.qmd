@@ -5,16 +5,81 @@ title: "Matriz de Insumo Produto para o Piauí"
 Seguindo o trabalho de Vale e Perobelli (2020)
 
 ```{r}
+#| echo: true
+#| results: hide
+#| message: false
+#| warning: false
 library(Rcpp)
 library(readxl)
+library(dplyr)
 ```
 
 
 ```{r}
-R <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls",sheet="01", range = "A1:BV132")
+#| echo: true
+#| results: hide
+#| message: false
+#| warning: false
 
-
+# Tabela de Consumo Intermediario
 U <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="02",   range = "A1:BZ134")
+
+cod_prod_67<- data.frame(U[5:131, 1])
+colnames(cod_prod_67) <- "cod_prod_67"
+
+cod_set_67<- data.frame(U[3, 3:69])
+colnames(cod_set_67) <- "cod_set_67"
+
+ci_values<- data.frame(U[5:131, 3:69])
+ci_values <- ci_values %>%
+  mutate(across(where(is.character), as.numeric))
+
+nrow(cod_prod_67)
+nrow(ci_values)
+
+temp1 <- cbind(cod_prod_67,ci_values) 
+
+temp1$cod_4dig <- substr(as.character(temp1$cod_prod_67), 1, 4)
+
+temp2 <- temp1 %>%
+  group_by(cod_4dig) %>%
+  summarise(across(where(is.numeric), sum, na.rm = TRUE))
+
+Z <- data.matrix(temp2[1:67, 2:68])
+```
+
+```{r}
+#| echo: true
+#| results: hide
+#| message: false
+#| warning: false
+
+# Demanda Final
+demanda_final<- data.frame(U[5:131, 77])
+demanda_final <- demanda_final %>%
+  mutate(across(where(is.character), as.numeric))
+
+
+nrow(cod_prod_67)
+nrow(demanda_final)
+
+temp3 <- cbind(cod_prod_67,demanda_final) 
+
+temp3$cod_4dig <- substr(as.character(temp3$cod_prod_67), 1, 4)
+
+temp4 <- temp3 %>%
+  group_by(cod_4dig) %>%
+  summarise(across(where(is.numeric), sum, na.rm = TRUE))
+
+```
+
+```{r}
+#| echo: true
+#| results: hide
+#| message: false
+#| warning: false
+
+R <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls",sheet="01", range = "A1:BV132")
 Odn <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="03",   range = "A1:CA134")
 Odi <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="04",   range = "A1:CA134")
 In <- read_excel("Matriz_de_Insumo_Produto_2015_Nivel_67.xls", sheet="05",   range = "A1:CA134")
